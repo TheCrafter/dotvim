@@ -40,6 +40,9 @@ else
     set dir=~/tmp
 endif
 
+" Always show status line
+"set laststatus=2
+
 "------------------------------------------------------------
 "                        Gui options
 "------------------------------------------------------------
@@ -77,11 +80,12 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "--
 " Non Lazy
 "--
-NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'jiangmiao/auto-pairs'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'SirVer/ultisnips'
-
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
 \     'windows' : 'tools\\update-dll-mingw',
