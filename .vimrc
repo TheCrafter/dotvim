@@ -78,7 +78,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 "--
-" Non Lazy
+" General
 "--
 NeoBundle 'jiangmiao/auto-pairs'
 NeoBundle 'kien/ctrlp.vim'
@@ -96,9 +96,6 @@ NeoBundle 'Shougo/vimproc.vim', {
 \    }
 \ }
 
-"--
-" Lazy
-"--
 NeoBundleLazy 'scrooloose/nerdtree', {
 \ 'autoload' : {
 \     'commands': 'NERDTree'
@@ -114,6 +111,11 @@ NeoBundleLazy 'Valloric/YouCompleteMe', {
 \     'mac': './install.py --clang-completer'
 \    }
 \ }
+
+"--
+" Java
+"--
+NeoBundleLazy 'artur-shaik/vim-javacomplete2', { 'filetypes': ['java'] }
 
 call neobundle#end()
 
