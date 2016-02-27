@@ -82,6 +82,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "--
 NeoBundle 'jiangmiao/auto-pairs'
 NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'tikhomirov/vim-glsl'
 NeoBundle 'vim-airline/vim-airline'
 NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'scrooloose/syntastic'
