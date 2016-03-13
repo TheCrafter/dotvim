@@ -40,6 +40,11 @@ else
     set dir=~/tmp
 endif
 
+" Auto-close the auto completion preview buffer when auto completion is over
+" Source -> http://stackoverflow.com/a/3107159/3671272
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave  * if pumvisible() == 0|pclose|endif
+
 " Always show status line
 "set laststatus=2
 
