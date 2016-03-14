@@ -1,6 +1,12 @@
 " Open a line up and down at the same time
 nnoremap oO o<Esc>O
 
+" Open two lines down at the same time
+nnoremap oo o<Esc>o
+
+" Open two lines up at the same time
+nnoremap OO O<Esc>O
+
 " Edit vimrc file
 nnoremap <F12> :edit ~/.vim/.vimrc <CR>
 
