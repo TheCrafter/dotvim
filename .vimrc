@@ -108,6 +108,10 @@ NeoBundleLazy 'scrooloose/nerdtree', {
 \    } 
 \ }
 
+NeoBundleLazy 'Shutnik/jshint2.vim', {
+\ 'filetypes': ['javascript']
+\ }
+
 NeoBundleLazy 'Valloric/YouCompleteMe', {
 \ 'augroup': 'youcompletemeStart',
 \ 'filetypes': ['c', 'cpp', 'cs', 'haskell', 'lua', 'java', 'rust'],
