@@ -101,6 +101,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 \     'unix' : 'gmake',
 \    }
 \ }
+NeoBundle 'ternjs/tern_for_vim'
 
 NeoBundleLazy 'scrooloose/nerdtree', {
 \ 'autoload' : {
@@ -114,11 +115,11 @@ NeoBundleLazy 'Shutnik/jshint2.vim', {
 
 NeoBundleLazy 'Valloric/YouCompleteMe', {
 \ 'augroup': 'youcompletemeStart',
-\ 'filetypes': ['c', 'cpp', 'cs', 'haskell', 'lua', 'java', 'rust'],
+\ 'filetypes': ['c', 'cpp', 'cs', 'haskell', 'lua', 'java', 'rust', 'javascript'],
 \ 'build': {
-\     'windows': 'install.py --clang-completer',
-\     'unix': './install.py --clang-completer',
-\     'mac': './install.py --clang-completer'
+\     'windows': 'install.py --clang-completer --tern-completer',
+\     'unix': './install.py --clang-completer --tern-completer',
+\     'mac': './install.py --clang-completer --tern-completer'
 \    }
 \ }
 
