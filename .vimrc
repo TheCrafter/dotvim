@@ -115,7 +115,7 @@ NeoBundleLazy 'Shutnik/jshint2.vim', {
 
 NeoBundleLazy 'Valloric/YouCompleteMe', {
 \ 'augroup': 'youcompletemeStart',
-\ 'filetypes': ['c', 'cpp', 'cs', 'haskell', 'lua', 'java', 'rust', 'javascript'],
+\ 'filetypes': ['c', 'cpp', 'cs', 'haskell', 'lua', 'java', 'rust', 'javascript', 'html'],
 \ 'build': {
 \     'windows': 'install.py --clang-completer --tern-completer',
 \     'unix': './install.py --clang-completer --tern-completer',
