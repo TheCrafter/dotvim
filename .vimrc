@@ -85,6 +85,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "--
 " General
 "--
+NeoBundle 'alvan/vim-closetag'
 NeoBundle 'jiangmiao/auto-pairs'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'tikhomirov/vim-glsl'
