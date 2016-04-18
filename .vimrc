@@ -103,6 +103,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 \    }
 \ }
 NeoBundle 'ternjs/tern_for_vim'
+NeoBundle 'tpope/vim-surround'
 
 NeoBundleLazy 'scrooloose/nerdtree', {
 \ 'autoload' : {
