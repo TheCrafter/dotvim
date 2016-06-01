@@ -28,6 +28,8 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
+autocmd FileType html :setlocal sw=2 ts=2 sts=2 " Two spaces for HTML files
+
 " Set theme
 "let g:molokai_original = 1 
 colorscheme molokai
