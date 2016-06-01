@@ -48,6 +48,9 @@ autocmd InsertLeave  * if pumvisible() == 0|pclose|endif
 " Always show status line
 "set laststatus=2
 
+" Set encoding to UTF-8
+set encoding=utf-8
+
 "------------------------------------------------------------
 "                        Gui options
 "------------------------------------------------------------
