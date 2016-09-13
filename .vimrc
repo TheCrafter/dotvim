@@ -11,6 +11,8 @@ endif
 "------------------------------------------------------------
 "                      General Settings
 "------------------------------------------------------------
+let maplocalleader=","
+
 set showcmd                         " Show incomplete cmds down the bottom
 set showmode                        " Show current mode down the bottom
 set number                          " Show line numbers
@@ -109,6 +111,8 @@ NeoBundle 'Shougo/vimproc.vim', {
 \ }
 NeoBundle 'ternjs/tern_for_vim'
 NeoBundle 'tpope/vim-surround'
+
+NeoBundleLazy 'lervag/vimtex', { 'filetypes': 'tex' }
 
 NeoBundleLazy 'scrooloose/nerdtree', {
 \ 'autoload' : {
