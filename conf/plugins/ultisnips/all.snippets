@@ -15,3 +15,24 @@ snip.rv = guard`}
 
 #endif // ! $1
 endsnippet
+
+snippet jshint "JSHint rc file" j
+{
+    "globals": {
+	"$": false,
+        "jQuery": false
+    }
+}
+endsnippet
+
+snippet tern "Tern project configuration" t
+{
+    "libs": [
+	"browser",
+    	"jquery"
+    ],
+    "loadEagerly": [
+	"jsfile.js"
+    ]
+}
+endsnippet
