@@ -65,7 +65,10 @@ if has("gui_running")
     set guioptions-=L         "remove left-hand scroll bar
 
     " Font
-    set guifont=Consolas:h10:cANSI
+    " Windows Font
+    if has('win32') || has('win64')
+        set guifont=Consolas:h10:cANSI
+    endif
 
     " Start in fullscren in windows
     if has('win32') || has('win64')
