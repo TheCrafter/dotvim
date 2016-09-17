@@ -2,7 +2,6 @@ import os
 import glob
 import logging
 import inspect
-import yaml
 
 logger = logging.getLogger( __name__ )
 
@@ -26,43 +25,63 @@ def FindFileInClosestParent(filename, filepath):
     else:
         return None
 
+def ImplicitIncludes(srcfile):
+    startSearchPath = os.path.dirname(srcfile)
+    cfg = FindFileInClosestParent("config.mk", startSearchPath)
+
+    implicitIncludes = ['include'] + glob.glob(os.path.dirname(cfg) + '/deps/*/include')
+    return implicitIncludes
+
+def IncludesFromMakeCfg(srcfile):
+    startSearchPath = os.path.dirname(srcfile)
+    makeCfg = FindFileInClosestParent("config.mk", startSearchPath)
+    if makeCfg is None:
+        return None
+    # Read configuration file
+    with open(makeCfg, "r") as f:
+        data = f.readlines()
+    # Search for lines containing ADDINC and take space separated paths
+    incs = []
+    for line in data:
+        if "ADDINC" in line:
+            incs = line.split()[2:]
+    return incs
+
 def FlagsForFile(filename, **kwargs):
+    # Gather the source filetype
     data = kwargs['client_data']
     filetype = data['&filetype']
 
-    flags = [
-                '-Wall',
-                '-Wextra'
-            ]
+    # Debug
+    #executable_dir = os.path.dirname(os.path.realpath(inspect.getfile(inspect.currentframe())))
 
+    # Common flags
+    flags = ['-Wall', '-Wextra']
+
+    # Language variant specific flags
     lang_specific_flags = \
     {
         'cpp': ['-xc++', '-std=c++14'],
         'c'  : ['-xc']
     }
-
     flags.extend(lang_specific_flags[filetype])
+    if os.name == 'nt':
+        flags.append("--target=i686-mingw32")
 
-    logger.info("Generating additionalIncludes for file: " + filename)
-    startSearchPath = os.path.dirname(filename)
-    #executable_dir = os.path.dirname(os.path.realpath(inspect.getfile(inspect.currentframe())))
-    shakeCfg = FindFileInClosestParent("shake.yml", startSearchPath)
-    logger.info("Found shakeCfg: " + shakeCfg)
+    # Gather include directories for given source file
+    logger.info("Generating include directories for file: " + filename)
 
-    with open(shakeCfg, 'r') as stream:
-        y = yaml.load(stream)
-        logger.info(y)
-        if "AdditionalIncludes" in y:
-            additionalIncludes = y["AdditionalIncludes"]
-        else:
-            additionalIncludes = []
-
-    includes = ['include'] + glob.glob(os.path.dirname(shakeCfg) + '/deps/*/include') + additionalIncludes
-
-    defines  = []
+    # Try parsing SBuild and then Makefile configuration if that fails
+    includes = ImplicitIncludes(filename)
+    makeIncludes = IncludesFromMakeCfg(filename)
+    if makeIncludes is not None:
+        includes += makeIncludes
 
     for i in includes:
         flags.append('-I' + i)
+
+    # Gather define flags
+    defines  = []
     for d in defines:
         flags.append('-D' + d)
 
