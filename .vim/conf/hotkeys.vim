@@ -8,7 +8,7 @@ nnoremap oo o<Esc>o
 nnoremap OO O<Esc>O
 
 " Edit vimrc file
-nnoremap <F12> :edit ~/.vim/.vimrc <CR>
+nnoremap <F12> :edit ~/dotvim/.vimrc <CR>
 
 " Remap the Escape key
 inoremap jk <Esc>
