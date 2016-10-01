@@ -157,10 +157,10 @@ NeoBundleCheck
 set runtimepath+=$HOME/.vim/conf/plugins
 for file in split(globpath('~/.vim/conf/plugins', '*.vim'), '\n')
     exe 'source' file
-endfor 
+endfor
 
-"------------------------------------------------------------
-"                          Hotkeys
-"------------------------------------------------------------
 set runtimepath+=$HOME/.vim/conf
-source ~/.vim/conf/hotkeys.vim
+for file in split(globpath('~/.vim/conf', '*.vim'), '\n')
+    exe 'source' file
+endfor
+
