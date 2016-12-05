@@ -68,6 +68,8 @@ if has("gui_running")
     " Windows Font
     if has('win32') || has('win64')
         set guifont=Consolas:h10:cANSI
+    else
+        set guifont=Source\ Code\ Pro\ 9
     endif
 
     " Start in fullscren in windows
