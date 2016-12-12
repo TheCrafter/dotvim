@@ -22,6 +22,10 @@ syntax on                           " Turn on syntax highlighting
 set hlsearch                        " Highlight search terms
 set incsearch                       " Show search matches as you type
 
+" No sound
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+
 " Unix line endings
 set fileformats=unix,dos
 
