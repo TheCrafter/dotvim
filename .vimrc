@@ -117,6 +117,11 @@ NeoBundle 'Shougo/vimproc.vim', {
 NeoBundle 'ternjs/tern_for_vim'
 NeoBundle 'tpope/vim-surround'
 
+" Haskell
+NeoBundleLazy 'eagletmt/ghcmod-vim', { 'filetypes': 'haskell' }
+NeoBundleLazy 'eagletmt/neco-ghc', { 'filetypes': 'haskell' }
+NeoBundleLazy 'neovimhaskell/haskell-vim', { 'filetypes': 'haskell' }
+
 NeoBundleLazy 'leafgarland/typescript-vim', { 'filetypes': ['typescript'] }
 
 NeoBundleLazy 'lervag/vimtex', { 'filetypes': 'tex' }
