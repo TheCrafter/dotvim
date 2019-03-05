@@ -123,6 +123,8 @@ endif
 " Start plugin handling
 call plug#begin('~/.vim/bundle')
 
+" Auto close (X)HTML tags
+Plug 'alvan/vim-closetag'
 " A tree explorer
 Plug 'scrooloose/nerdtree'
 " Snippet plugin
