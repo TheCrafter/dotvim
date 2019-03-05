@@ -4,3 +4,6 @@
 
 # Ignore compiled python
 *.pyc
+
+# Ignore vimplug
+.vim/autoload/plug.vim

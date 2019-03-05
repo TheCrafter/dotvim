@@ -3,9 +3,25 @@ if &compatible
     set nocompatible
 endif
 
-" Wombo combo for windows
+"------------------------------------------------------------
+"                       Plugin Manager
+"------------------------------------------------------------
 if has('win32') || has('win64')
     set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+endif
+
+let has_vimplug = expand($HOME.'/.vim/autoload/plug.vim')
+if !filereadable(has_vimplug)
+    let vimplug_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    if executable('wget')
+        call mkdir(fnamemodify($HOME.'/.vim/autoload/plug.vim', ':h'), 'p')
+        exec '!wget --force-directories --no-check-certificate -O '.$HOME.'/.vim/autoload/plug.vim'.' '.vimplug_url
+    elseif executable('curl')
+        exec '!curl -fLo '.$HOME.'/.vim/autoload/plug.vim'.' --create-dirs '.vimplug_url
+    else
+        echom 'Could not download plugin manager. No plugins were installed'
+        finish
+    endif
 endif
 
 "------------------------------------------------------------
@@ -13,51 +29,78 @@ endif
 "------------------------------------------------------------
 let maplocalleader=","
 
+set nowrap                          " Don't wrap lines
+set autoread                        " Reload files changed outside vim
+set backspace=indent,eol,start      " Allow backspace in insert mode
 set showcmd                         " Show incomplete cmds down the bottom
 set showmode                        " Show current mode down the bottom
 set number                          " Show line numbers
-set backspace=indent,eol,start      " Allow backspace in insert mode
-syntax on                           " Turn on syntax highlighting
-
 set hlsearch                        " Highlight search terms
 set incsearch                       " Show search matches as you type
 
-" No sound
-set noerrorbells visualbell t_vb=
+" Turn on syntax highlighting
+syntax on
+
+" No sounds
+set noerrorbells
+set visualbell
+set t_vb=
 autocmd GUIEnter * set visualbell t_vb=
+
+" Enable Filetype detection
+filetype plugin indent on
+
+" Enable useful autocomplete for commands
+set wildmenu
+set wildmode=list:longest,list:full
+
+" Remove preview window from autocompletion
+set completeopt-=preview
+
+" Turn off swap and backup files
+set noswapfile
+set nobackup
+set nowb
+
+" Indentation
+set autoindent    " Copy indent from current line when starting a new line
+set smartindent   " Do smart autoindenting when starting a new line
+set smarttab      " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'
+set shiftwidth=4  " Number of spaces to use for each step of (auto)indent
+set softtabstop=4 " Number of spaces that a <Tab> counts for while performing editing operations
+set tabstop=4     " Number of spaces that a <Tab> in the file counts for
+set expandtab     " Spaces instead of tabs
+
+" Auto-close the auto completion preview buffer when auto completion is over
+" Source -> http://stackoverflow.com/a/3107159/3671272
+"autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+"autocmd InsertLeave  * if pumvisible() == 0|pclose|endif
+
+"------------------------------------------------------------
+"                      Colors & Fonts
+"------------------------------------------------------------
+" Set encoding to UTF-8
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8
 
 " Unix line endings
 set fileformats=unix,dos
 
-" Tab settings
-set shiftwidth=4
-set softtabstop=4
-set expandtab
-
-autocmd FileType html :setlocal sw=2 ts=2 sts=2 " Two spaces for HTML files
-
-" Set theme
-"let g:molokai_original = 1 
-colorscheme molokai
-
-" Set swapfile and backup location
-set swapfile
-if has("win32") || has("win16")
-    set dir=$TMP    
-else
-    set dir=~/tmp
+" Windows Font
+if has('win32') || has('win64')
+    set guifont=Consolas:h10:cANSI
+elseif has('gui_gtk2')
+    set guifont=Source\ Code\ Pro\ for\ Powerline\ 10
 endif
 
-" Auto-close the auto completion preview buffer when auto completion is over
-" Source -> http://stackoverflow.com/a/3107159/3671272
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave  * if pumvisible() == 0|pclose|endif
+" Set color theme
+colorscheme molokai
 
-" Always show status line
-"set laststatus=2
-
-" Set encoding to UTF-8
-set encoding=utf-8
+" Enable DirectX rendering on Windows
+if has('win32') || has('win64')
+    set rop=type:directx,geom:1,taamode:1
+endif
 
 "------------------------------------------------------------
 "                        Gui options
@@ -68,14 +111,6 @@ if has("gui_running")
     set guioptions-=r         "remove right-hand scroll bar
     set guioptions-=L         "remove left-hand scroll bar
 
-    " Font
-    " Windows Font
-    if has('win32') || has('win64')
-        set guifont=Consolas:h10:cANSI
-    else
-        set guifont=Source\ Code\ Pro\ 9
-    endif
-
     " Start in fullscren in windows
     if has('win32') || has('win64')
         au GUIEnter * simalt ~x
@@ -85,88 +120,33 @@ endif
 "------------------------------------------------------------
 "                          Plugins
 "------------------------------------------------------------
-" Note: Skip initialization for vim-tiny or vim-small.
-if 0 | endif
+" Start plugin handling
+call plug#begin('~/.vim/bundle')
 
-" Required:
-set runtimepath+=~/.vim/bundle/neobundle.vim/
+" A tree explorer
+Plug 'scrooloose/nerdtree'
+" Snippet plugin
+Plug 'SirVer/ultisnips'
+" Intensely orgasmic commenting
+Plug 'tpope/vim-commentary'
+" Lean & mean status/tabline for vim that's light as air.
+Plug 'vim-airline/vim-airline'
 
-" Required:
-call neobundle#begin(expand('~/.vim/bundle/'))
+" Complete engine and Language Server Support
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
-" Let NeoBundle manage NeoBundle
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
+" End plugin handling
+call plug#end()
 
-"--
-" General
-"--
-NeoBundle 'alvan/vim-closetag'
-NeoBundle 'jiangmiao/auto-pairs'
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'tikhomirov/vim-glsl'
-NeoBundle 'vim-airline/vim-airline'
-NeoBundle 'vim-airline/vim-airline-themes'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'windows' : 'tools\\update-dll-mingw',
-\     'cygwin' : 'make -f make_cygwin.mak',
-\     'mac' : 'make',
-\     'linux' : 'make',
-\     'unix' : 'gmake',
-\    }
-\ }
-NeoBundle 'ternjs/tern_for_vim'
-NeoBundle 'tpope/vim-surround'
+"------------------------------------------------------------
+"                        Configs
+"------------------------------------------------------------
+" Remove the Windows ^M when the encodings gets f****d up
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
-" Haskell
-NeoBundleLazy 'eagletmt/ghcmod-vim', { 'filetypes': 'haskell' }
-NeoBundleLazy 'eagletmt/neco-ghc', { 'filetypes': 'haskell' }
-NeoBundleLazy 'neovimhaskell/haskell-vim', { 'filetypes': 'haskell' }
-
-NeoBundleLazy 'leafgarland/typescript-vim', { 'filetypes': ['typescript'] }
-
-NeoBundleLazy 'lervag/vimtex', { 'filetypes': 'tex' }
-
-NeoBundleLazy 'scrooloose/nerdtree', {
-\ 'autoload' : {
-\     'commands': 'NERDTree'
-\    } 
-\ }
-
-NeoBundleLazy 'Shutnik/jshint2.vim', {
-\ 'filetypes': ['javascript']
-\ }
-
-NeoBundleLazy 'Valloric/YouCompleteMe', {
-\ 'augroup': 'youcompletemeStart',
-\ 'filetypes': ['c', 'cpp', 'cs', 'haskell', 'lua', 'java', 'rust', 'javascript', 'html'],
-\ 'build': {
-\     'windows': 'install.py --clang-completer --tern-completer',
-\     'unix': './install.py --clang-completer --tern-completer',
-\     'mac': './install.py --clang-completer --tern-completer'
-\    }
-\ }
-
-"--
-" Java
-"--
-NeoBundleLazy 'artur-shaik/vim-javacomplete2', { 'filetypes': ['java'] }
-
-call neobundle#end()
-
-" Required:
-filetype plugin indent on
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
-
-"--
-" Configs
-"--
 set runtimepath+=$HOME/.vim/conf/plugins
 for file in split(globpath('~/.vim/conf/plugins', '*.vim'), '\n')
     exe 'source' file
